@@ -18,16 +18,32 @@ public class Out {
 
     public static void displayContent(boolean[][] tiles) {
         System.out.print(ANSI_RESET + "\n\n\n\n\n\n\n\n\n\n\n" + ANSI_BLUE_BACKGROUND);
-        for (int i = 0; i < tiles.length + 2; i++) System.out.print("   ");
-        System.out.print(ANSI_RESET + "\n" + ANSI_BLUE_BACKGROUND + "   " + ANSI_RESET);
-        for (boolean[] i : tiles) {
-            for (boolean j : i) {
+        System.out.print("   ");
+
+        // Print column numbers
+        for (int i = 0; i < tiles.length; i++)
+            System.out.print(" " + i + " ");
+
+        System.out.println("   " + ANSI_RESET);
+
+        // Print tile content
+        for (int i = 0; i < tiles.length; i++) {
+            System.out.print(ANSI_BLUE_BACKGROUND + " " + i + " " + ANSI_RESET);
+
+            // Print row content
+            for (boolean j : tiles[i]) {
                 System.out.print(charMap.get(j));
             }
-            System.out.print(ANSI_BLUE_BACKGROUND + "   " + ANSI_RESET + "\n" + ANSI_BLUE_BACKGROUND + "   " + ANSI_RESET);
+
+            System.out.print(ANSI_BLUE_BACKGROUND + "   " + ANSI_RESET + "\n");
         }
+
+        // Print bottom border
         System.out.print(ANSI_BLUE_BACKGROUND);
-        for (int i = 0; i < tiles.length + 1; i++) System.out.print("   ");
+        for (int i = 0; i < tiles.length + 2; i++)
+            System.out.print("   ");
+
         System.out.print(ANSI_RESET);
     }
+
 }
