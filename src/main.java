@@ -1,3 +1,4 @@
+import cgl.Logic;
 import cgl.Out;
 
 import java.nio.charset.StandardCharsets;
@@ -10,15 +11,29 @@ public class main {
 
     public static void main(String[] args) {
 
+        /*
+        Important Note:
+
+        The top left position is (0,0), but movement in the vertical direction is considered
+        the X-axis. This is the case because when referencing a 2d array, a format exists
+        such that (x,y) == myArray[y][x].
+         */
+
         boolean[][] tiles = new boolean[9][9];
 
         boolean t;
+
+        String lastError = "";
 
         while (active) {
 
             Out.displayContent(tiles);
 
-            System.out.print("\n\n> ");
+            System.out.println(Logic.countNeighbors(tiles, 0, 5));
+
+            System.out.print("\n" + lastError + "\n> ");
+
+            lastError = "";
 
             String input = userInput.nextLine();
 
@@ -26,12 +41,14 @@ public class main {
 
             if (data[0].equals("end")) {
                 active = false;
-            } else if (data[0].equals("set")) {
+            } else if (data[0].equals("step")) {
+
+            } else {
                 try {
-                    int i = Integer.parseInt(data[2]), j = Integer.parseInt(data[1]); // Indexes reversed due to 2d Array APoxy
+                    int i = Integer.parseInt(data[0]), j = Integer.parseInt(data[1]);
                     tiles[i][j] = !tiles[i][j];
                 } catch (Exception e) {
-                    System.out.println("Invalid Format.");
+                    lastError = "Invalid Format.";
                 }
             }
 
