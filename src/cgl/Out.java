@@ -22,13 +22,17 @@ public class Out {
 
         // Print column numbers
         for (int i = 0; i < tiles.length; i++)
-            System.out.print(" " + i + " ");
+            System.out.print(" " + (i % 10) + " ");
 
         System.out.println("   " + ANSI_RESET);
 
         // Print tile content
         for (int i = 0; i < tiles.length; i++) {
-            System.out.print(ANSI_BLUE_BACKGROUND + " " + i + " " + ANSI_RESET);
+            if (i < 10) {
+                System.out.print(ANSI_BLUE_BACKGROUND + " " + i + " " + ANSI_RESET);
+            } else {
+                System.out.print(ANSI_BLUE_BACKGROUND + i + " " + ANSI_RESET);
+            }
 
             // Print row content
             for (boolean j : tiles[i]) {

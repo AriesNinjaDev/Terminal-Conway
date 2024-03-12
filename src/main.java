@@ -2,6 +2,7 @@ import cgl.Logic;
 import cgl.Out;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 import java.util.Scanner;
 
 public class main {
@@ -11,6 +12,8 @@ public class main {
 
     public static void main(String[] args) {
 
+        int boardSize = 25;
+
         /*
         Important Note:
 
@@ -19,7 +22,7 @@ public class main {
         such that (x,y) == myArray[y][x].
          */
 
-        boolean[][] tiles = new boolean[9][9];
+        boolean[][] tiles = new boolean[boardSize][boardSize];
 
         boolean t;
 
@@ -29,7 +32,7 @@ public class main {
 
             Out.displayContent(tiles);
 
-            System.out.println(Logic.countNeighbors(tiles, 0, 5));
+            //System.out.println(Logic.countNeighbors(tiles, 0, 5));
 
             System.out.print("\n" + lastError + "\n> ");
 
@@ -39,17 +42,44 @@ public class main {
 
             String[] data = input.split(" ");
 
-            if (data[0].equals("end")) {
-                active = false;
-            } else if (data[0].equals("step")) {
-
-            } else {
-                try {
-                    int i = Integer.parseInt(data[0]), j = Integer.parseInt(data[1]);
-                    tiles[i][j] = !tiles[i][j];
-                } catch (Exception e) {
-                    lastError = "Invalid Format.";
-                }
+            switch (data[0]) {
+                case "end":
+                    active = false;
+                    break;
+                case "s":
+                    for (int i = 0; i < tiles.length; i++) {
+                        for (int j = 0; j < tiles.length; j++) {
+                            int n = Logic.countNeighbors(tiles, i, j);
+                            if (tiles[i][j] && (n == 1 || n > 3)) {
+                                tiles[i][j] = false;
+                            } else if ((!tiles[i][j]) && n == 3) {
+                                tiles[i][j] = true;
+                            }
+                        }
+                    }
+                    break;
+                case "reset":
+                    for (int i = 0; i < tiles.length; i++) {
+                        for (int j = 0; j < tiles.length; j++) {
+                            tiles[i][j] = false;
+                        }
+                    }
+                    break;
+                case "rand":
+                    Random random = new Random();
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            tiles[i][j] = random.nextBoolean();
+                        }
+                    }
+                default:
+                    try {
+                        int i = Integer.parseInt(data[0]), j = Integer.parseInt(data[1]);
+                        tiles[i][j] = !tiles[i][j];
+                    } catch (Exception e) {
+                        lastError = "Invalid Format.";
+                    }
+                    break;
             }
 
         }
