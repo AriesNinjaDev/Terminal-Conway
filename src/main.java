@@ -28,6 +28,8 @@ public class main {
 
         String lastError = "";
 
+        Random random = new Random();
+
         while (active) {
 
             Out.displayContent(tiles);
@@ -66,7 +68,7 @@ public class main {
                     }
                     break;
                 case "rand":
-                    Random random = new Random();
+
                     for (int i = 0; i < boardSize; i++) {
                         for (int j = 0; j < boardSize; j++) {
                             tiles[i][j] = random.nextBoolean();
